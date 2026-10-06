@@ -1,6 +1,8 @@
 from sqlalchemy import BigInteger, String, Boolean, ForeignKey, DECIMAL, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime, timezone
+from decimal import Decimal
+
 from finance_bot.database import Base 
 
 class User(Base):
@@ -32,7 +34,7 @@ class Transaction(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"))
-    amount: Mapped[float] = mapped_column(DECIMAL(10, 2))
+    amount: Mapped[Decimal] = mapped_column(DECIMAL(10, 2))
     description: Mapped[str] = mapped_column(String, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
